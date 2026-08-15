@@ -1,0 +1,9 @@
+This product includes a modified adaptation of the StackStorm Exchange Splunk
+pack, version 2.3.0, originally attributed to StackStorm, Inc.
+
+Source: https://github.com/StackStorm-Exchange/stackstorm-splunk
+Revision: 6bc01ba4253e4372f829d77bba6350799a0fed31
+License: Apache License 2.0
+
+The original implementation was replaced with an Attune-native client and
+current Splunk REST API calls. No Splunk SDK source code is included.

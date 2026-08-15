@@ -1,0 +1,37 @@
+ref: splunk
+label: "Splunk"
+description: "Bounded Splunk Enterprise and Splunk Cloud search, HEC ingestion, and narrowly scoped administration"
+version: "0.1.0"
+author: "Attune"
+email: "support@attune.systems"
+system: false
+enabled: true
+
+conf_schema: {}
+config: {}
+
+meta:
+  category: integration
+  documentation_url: "https://github.com/attune-packs/splunk"
+  repository_url: "https://github.com/attune-packs/splunk"
+  source_revision: "6bc01ba4253e4372f829d77bba6350799a0fed31"
+  source_version: "2.3.0"
+  license: "Apache-2.0"
+
+tags: [splunk, search, hec, observability, siem]
+runtime_deps: [python]
+dependencies: []
+
+testing:
+  enabled: true
+  discovery:
+    method: directory
+    path: tests
+  runners:
+    python:
+      type: unittest
+      entry_point: tests/test_pack.py
+      timeout: 120
+      result_format: simple
+  min_pass_rate: 1.0
+  on_failure: block

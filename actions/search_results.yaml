@@ -1,0 +1,20 @@
+ref: splunk.search_results
+label: "Get Splunk Search Results"
+description: "Return one bounded page from the current search/v2 results endpoint"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: splunk_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  credential_key: {type: string, default: "splunk.credentials", description: "Pack-owned encrypted Splunk credential Key ref"}
+  sid: {type: string, required: true}
+  count: {type: integer, default: 100, minimum: 1, maximum: 1000}
+  offset: {type: integer, default: 0, minimum: 0, maximum: 1000000000}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [splunk, search, results, pagination]

@@ -1,0 +1,19 @@
+ref: splunk.hec_token_set_enabled
+label: "Enable Or Disable Splunk HEC Token"
+description: "Change one named application HEC token without exposing its secret or changing global HEC state"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: splunk_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  credential_key: {type: string, default: "splunk.credentials", description: "Pack-owned encrypted Splunk credential Key ref"}
+  name: {type: string, required: true, description: "Exact application token name; the global 'http' stanza is rejected"}
+  enabled: {type: boolean, required: true}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [splunk, hec, token, administration]

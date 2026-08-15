@@ -1,0 +1,21 @@
+ref: splunk.search_create
+label: "Create Splunk Search Job"
+description: "Create an asynchronous Splunk search job and return its SID"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: splunk_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  credential_key: {type: string, default: "splunk.credentials", description: "Pack-owned encrypted Splunk credential Key ref"}
+  query: {type: string, required: true, description: "Complete SPL search submitted as an encoded form value"}
+  earliest_time: {type: string, description: "Optional Splunk earliest_time value"}
+  latest_time: {type: string, description: "Optional Splunk latest_time value"}
+  max_time_seconds: {type: integer, minimum: 1, maximum: 86400, description: "Optional server-side search runtime limit"}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [splunk, search, asynchronous]

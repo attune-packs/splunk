@@ -1,0 +1,18 @@
+ref: splunk.user_lookup
+label: "Look Up Splunk User"
+description: "Return an allowlisted profile for one Splunk user"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: splunk_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  credential_key: {type: string, default: "splunk.credentials", description: "Pack-owned encrypted Splunk credential Key ref"}
+  username: {type: string, required: true}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [splunk, user, lookup, read]

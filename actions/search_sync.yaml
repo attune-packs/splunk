@@ -1,0 +1,26 @@
+ref: splunk.search_sync
+label: "Run Splunk Search"
+description: "Create a search job, wait for bounded completion, and return one bounded result page"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: splunk_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  credential_key: {type: string, default: "splunk.credentials", description: "Pack-owned encrypted Splunk credential Key ref"}
+  query: {type: string, required: true, description: "Complete SPL search submitted as an encoded form value"}
+  earliest_time: {type: string, description: "Optional Splunk earliest_time value"}
+  latest_time: {type: string, description: "Optional Splunk latest_time value"}
+  max_time_seconds: {type: integer, minimum: 1, maximum: 86400, description: "Optional server-side search runtime limit"}
+  wait_seconds: {type: integer, default: 60, minimum: 1, maximum: 300, description: "Maximum client wait for completion"}
+  poll_interval_seconds: {type: number, default: 1, minimum: 0.1, maximum: 10}
+  cancel_on_timeout: {type: boolean, default: true}
+  count: {type: integer, default: 100, minimum: 1, maximum: 1000}
+  offset: {type: integer, default: 0, minimum: 0, maximum: 1000000000}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [splunk, search, synchronous, read]
