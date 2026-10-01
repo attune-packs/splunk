@@ -71,7 +71,7 @@ class PackTests(unittest.TestCase):
             for contract in (
                 "runner_type: python", "entry_point: splunk_action.py",
                 "parameter_delivery: stdin", "parameter_format: json", "output_format: json",
-                "default_execution_permission_set_refs: [standard]", 'default: "splunk.credentials"',
+                "default_execution_permission_set_refs: [standard]", 'default: "pack.splunk.credentials"',
                 "  operation: {type: string, required: true}",
                 "  result: {type: object, required: true}",
             ):
@@ -84,12 +84,12 @@ class PackTests(unittest.TestCase):
         self.assertIn('license: "Apache-2.0"', text)
         self.assertIn("entry_point: tests/test_pack.py", text)
 
-    def test_key_lookup_requests_decryption_and_pack_scope(self):
+    def test_key_lookup_uses_canonical_ref_and_pack_scope(self):
         calls = {}
         get_key_module = ModuleType("attune.api_client.api.secrets.get_key")
 
-        def sync_detailed(ref, *, client, decrypt):
-            calls.update(ref=ref, client=client, decrypt=decrypt)
+        def sync_detailed(ref, *, client):
+            calls.update(ref=ref, client=client)
             return SimpleNamespace(parsed=SimpleNamespace(data=SimpleNamespace(value=credentials())))
 
         get_key_module.sync_detailed = sync_detailed
@@ -102,8 +102,8 @@ class PackTests(unittest.TestCase):
             "attune.api_client.api.secrets": secrets,
         }
         with patch.dict(sys.modules, modules):
-            self.assertEqual(splunk_client._fetch_key("splunk.credentials")["timeout_seconds"], 15)
-        self.assertEqual(calls, {"ref": "splunk.credentials", "client": "execution-client", "decrypt": True})
+            self.assertEqual(splunk_client._fetch_key("pack.splunk.credentials")["timeout_seconds"], 15)
+        self.assertEqual(calls, {"ref": "pack.splunk.credentials", "client": "execution-client"})
         with self.assertRaises(splunk_client.SplunkPackError):
             splunk_client._fetch_key("other.credentials")
 

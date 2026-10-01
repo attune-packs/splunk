@@ -10,7 +10,7 @@ parameter_format: json
 output_format: json
 default_execution_permission_set_refs: [standard]
 parameters:
-  credential_key: {type: string, default: "splunk.credentials", description: "Pack-owned encrypted Splunk credential Key ref"}
+  credential_key: {type: string, default: "pack.splunk.credentials", description: "Pack-owned encrypted Splunk credential Key ref"}
   query: {type: string, required: true, description: "Complete SPL search submitted as an encoded form value"}
   earliest_time: {type: string, description: "Optional Splunk earliest_time value"}
   latest_time: {type: string, description: "Optional Splunk latest_time value"}

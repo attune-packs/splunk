@@ -27,13 +27,13 @@ class SplunkPackError(RuntimeError):
 
 
 def _fetch_key(ref: str) -> dict[str, Any]:
-    if not isinstance(ref, str) or not ref.startswith("splunk.") or len(ref) > 256:
-        raise SplunkPackError("credential_key must be a pack-owned splunk.* Key ref")
+    if not isinstance(ref, str) or not ref.startswith("pack.splunk.") or len(ref) > 256:
+        raise SplunkPackError("credential_key must be a pack-owned pack.splunk.* Key ref")
     try:
         import attune
         from attune.api_client.api.secrets import get_key
 
-        response = get_key.sync_detailed(ref, client=attune.context.client, decrypt=True)
+        response = get_key.sync_detailed(ref, client=attune.context.client)
         value = response.parsed.data.value
     except Exception as exc:
         raise SplunkPackError("unable to resolve the encrypted Splunk credential Key") from exc
@@ -460,7 +460,7 @@ def _flat_field_value(value: Any) -> bool:
 
 
 def client_from_params(params: dict[str, Any]) -> SplunkClient:
-    ref = params.get("credential_key", "splunk.credentials")
+    ref = params.get("credential_key", "pack.splunk.credentials")
     return SplunkClient(_fetch_key(ref))
 
 

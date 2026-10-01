@@ -12,8 +12,10 @@ version 2.3.0 at revision
 
 ## Setup
 
-Create an encrypted, pack-owned Attune Key with ref `splunk.credentials`.
-Actions use the reserved `standard` execution permission set to decrypt the Key.
+Create an encrypted Attune Key with `owner_type` set to `pack`, `local_ref` set
+to `credentials`, and `owner_pack_ref` set to `splunk`. The server constructs the canonical ref
+`pack.splunk.credentials`. Actions use the reserved `standard` execution
+permission set to decrypt the Key.
 Management and HEC endpoints and authentication are intentionally separate:
 
 ```json
@@ -42,8 +44,8 @@ enabled by default and can be configured independently with
 `management_verify_tls` and `hec_verify_tls`; disabling either is intended only
 for controlled development environments.
 
-Every action accepts `credential_key`, which defaults to `splunk.credentials`
-and must name a pack-owned `splunk.*` Key.
+Every action accepts `credential_key`, which defaults to
+`pack.splunk.credentials` and must name a `pack.splunk.*` Key.
 
 ## Actions
 

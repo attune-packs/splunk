@@ -10,7 +10,7 @@ parameter_format: json
 output_format: json
 default_execution_permission_set_refs: [standard]
 parameters:
-  credential_key: {type: string, default: "splunk.credentials", description: "Pack-owned encrypted Splunk credential Key ref"}
+  credential_key: {type: string, default: "pack.splunk.credentials", description: "Pack-owned encrypted Splunk credential Key ref"}
   event: {type: object, required: true, description: "JSON object stored as the HEC event value"}
   time: {type: number, minimum: 0, maximum: 100000000000}
   host: {type: string}

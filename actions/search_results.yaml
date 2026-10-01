@@ -10,7 +10,7 @@ parameter_format: json
 output_format: json
 default_execution_permission_set_refs: [standard]
 parameters:
-  credential_key: {type: string, default: "splunk.credentials", description: "Pack-owned encrypted Splunk credential Key ref"}
+  credential_key: {type: string, default: "pack.splunk.credentials", description: "Pack-owned encrypted Splunk credential Key ref"}
   sid: {type: string, required: true}
   count: {type: integer, default: 100, minimum: 1, maximum: 1000}
   offset: {type: integer, default: 0, minimum: 0, maximum: 1000000000}
